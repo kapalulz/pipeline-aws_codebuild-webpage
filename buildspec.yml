@@ -22,9 +22,10 @@ phases:
   build:
     commands:
       docker build -t webapp .
-      docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+     
      
   post_build:
     commands:
-      docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+     - docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+     - docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
 
