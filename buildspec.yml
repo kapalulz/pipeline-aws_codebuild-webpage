@@ -11,8 +11,8 @@ phases:
   install:
     commands:
       echo "Check aws and git version"
-      aws --version
-      git --version
+      - aws --version
+      - git --version
 
   pre_build:
     commands:
