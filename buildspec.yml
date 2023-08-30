@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 env:
   variables:
@@ -17,14 +17,16 @@ phases:
   pre_build:
     commands:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 671270630644.dkr.ecr.us-east-1.amazonaws.com
-
+      - COMMIT_ID=$(git rev-parse --short HEAD)
 
   build:
     commands:
-      - docker build -t webapp1 .
+      - docker build -t $ECR_REPO_NAME:$ECR_IMAGE_TAG .
+      - docker tag $ECR_REPO_NAME:$ECR_IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_NAME:$ECR_IMAGE_TAG
+      - docker tag $ECR_REPO_NAME:$ECR_IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_NAME:$COMMIT_ID
      
      
   post_build:
     commands:
-      - docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
-      - docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_NAME:$ECR_IMAGE_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_NAME:$COMMIT_ID
