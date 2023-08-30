@@ -1,14 +1,14 @@
 # codebuild-demo-master
 This repository demonstrates the use of AWS CodeBuild to automate the build and deployment process of a web application. The project consists of the following key components:
 
-Dockerfile:
+**Dockerfile:**
 
-  FROM nginx:latest
+    FROM nginx:latest
 
-  COPY ./index.html   /usr/share/nginx/html/index.html
-  COPY ./awslogo.png  /usr/share/nginx/html/awslogo.png
+    COPY ./index.html   /usr/share/nginx/html/index.html
+    COPY ./awslogo.png  /usr/share/nginx/html/awslogo.png
 
-buildspec.yml:
+**buildspec.yml:**
 The buildspec.yml file defines the AWS CodeBuild build and deployment process. It specifies the environment variables, 
 Docker image tagging, and other build steps required to package and deploy your application to Amazon Elastic Container Registry (ECR).
 
