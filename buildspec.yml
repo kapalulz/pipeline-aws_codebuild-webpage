@@ -10,23 +10,23 @@ env:
 phases:
   install:
     commands:
-      echo "Check aws and git version"
+      - echo "Check aws and git version"
       - aws --version
       - git --version
 
   pre_build:
     commands:
-      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 671270630644.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 671270630644.dkr.ecr.us-east-1.amazonaws.com
 
 
   build:
     commands:
-      docker build -t webapp .
-     - aws --version
-     - echo "hello!"
+      - docker build -t webapp .
+      - aws --version
+      - echo "hello!"
      
   post_build:
     commands:
-     - docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
-     - docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+      - docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+      - docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
 
