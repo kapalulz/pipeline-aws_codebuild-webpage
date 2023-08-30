@@ -28,4 +28,3 @@ phases:
     commands:
       - docker tag webapp:latest 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
       - docker push 671270630644.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
-
