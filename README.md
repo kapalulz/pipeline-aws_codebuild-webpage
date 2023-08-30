@@ -1,4 +1,4 @@
-# codebuild-demo-Webpage-master
+# codebuild-demo-webpage
 This repository demonstrates the use of AWS CodeBuild to automate the build and deployment process of a web application. The project consists of the following key components:
 
 **Dockerfile:**
