@@ -22,7 +22,8 @@ phases:
   build:
     commands:
       docker build -t webapp .
-     
+     - aws --version
+     - echo "hello!"
      
   post_build:
     commands:
