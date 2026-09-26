@@ -1,21 +1,33 @@
-# codebuild-demo-webpage
-This repository demonstrates the use of AWS CodeBuild to automate the build and deployment process of a web application. The project consists of the following key components:
+# AWS CodeBuild Container Pipeline Demo
 
-**Dockerfile:**
+A minimal static website packaged with Nginx and built by AWS CodeBuild for publication to Amazon ECR.
 
-    FROM nginx:latest
+## Components
 
-    COPY ./index.html   /usr/share/nginx/html/index.html
-    COPY ./awslogo.png  /usr/share/nginx/html/awslogo.png
+- `index.html` and `awslogo.png` — static website
+- `Dockerfile` — Nginx container image
+- `buildspec.yml` — CodeBuild build and registry workflow
 
-**buildspec.yml:**
-The buildspec.yml file defines the AWS CodeBuild build and deployment process. It specifies the environment variables, 
-Docker image tagging, and other build steps are required to package and deploy your application to Amazon Elastic Container Registry (ECR).
+## Run locally
 
-index.html that will be served by the Nginx web server in the Docker container.
+```bash
+docker build -t codebuild-demo-webpage .
+docker run --rm -p 8080:80 codebuild-demo-webpage
+```
 
-*githook connected to AWSBuild
-![image](https://github.com/kapalulz/pipeline-aws_codebuild-webpage/assets/17459523/f08ca10a-4026-465d-8fe3-b2bab331f68f)
+Open [http://localhost:8080](http://localhost:8080).
 
+## Pipeline flow
 
-<img src="https://cdn.discordapp.com/attachments/1146494704519761992/1146531589346570390/Web_page.gif">
+1. A source change starts CodeBuild.
+2. CodeBuild authenticates to ECR.
+3. Docker builds and tags the image.
+4. The image is pushed to the configured ECR repository.
+
+## Configuration
+
+Keep AWS account IDs, repository names, Regions, and image tags in CodeBuild environment variables. Store sensitive values in AWS Secrets Manager or Systems Manager Parameter Store.
+
+The CodeBuild role should have only the ECR and logging permissions required by the build.
+
+> Review `buildspec.yml` before use and avoid relying on a floating `latest` tag for production deployments.
